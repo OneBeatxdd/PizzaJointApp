@@ -1,0 +1,32 @@
+.page-loading-view-icon {
+  animation-name: page-loading-view-icon-rotate;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-out-sine;
+}
+
+@keyframes page-loading-view-icon-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.page-loading-view-text {
+  font-size: 150%;
+}
+
+.loading-screen-overlay {
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 3;
+  position: fixed;
+}
+
+.loading-screen-overlay.active {
+  display: block;
+}
