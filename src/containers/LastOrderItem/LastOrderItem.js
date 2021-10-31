@@ -8,8 +8,8 @@ import { pizzaDetailsSelector, pizzaLoadingSelector, toppingsLoadingSelector, to
 import PageLoadingView from '../../components/PageLoadingView/PageLoadingView';
 
 const useStyles = makeStyles((theme) => ({
-  inline: {
-    display: 'inline',
+  root: {
+    width: '300px',
   },
 }));
 
