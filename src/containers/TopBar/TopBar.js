@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { AppBar, Toolbar, Typography, Grid } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Grid, IconButton } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import clsx from 'clsx';
+import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
 import TopBarBasket from '../TopBarBasket/TopBarBasket';
 
 class TopBar extends Component {
   render = () => {
-    const { classes } = this.props;
+    const { classes, historyPush } = this.props;
     return (
       <AppBar
         position="sticky"
@@ -21,6 +22,16 @@ class TopBar extends Component {
           <Grid container justifyContent="space-between" alignItems="center">
             <Grid item>
               <Grid container alignItems="center">
+                <Grid item>
+                  <IconButton
+                    className={classes.icon}
+                    onClick={() => {
+                      historyPush('/');
+                    }}
+                  >
+                    <HomeRoundedIcon />
+                  </IconButton>
+                </Grid>
                 <Grid item>
                   {' '}
                   <Typography>Best Pizza Joint</Typography>
@@ -52,7 +63,10 @@ const styles = (theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
-  }
+  },
+  icon: {
+    color: 'white',
+  },
 });
 
 const mapStateToProps = (state) => {
@@ -62,10 +76,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     openMobileDrawer: () => dispatch({ type: 'OPEN_MOBILE_NAV_BAR' }),
     openNavDrawer: () => dispatch({ type: 'OPEN_NAV_DRAWER' }),
+    historyPush: ownProps.history.push,
   };
 };
 

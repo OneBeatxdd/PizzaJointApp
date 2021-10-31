@@ -37,3 +37,15 @@ export const getToppings = (querys) => {
     }
   };
 }
+
+export const checkout = (order) => {
+  // normally there will be a BE call here!
+  // api('post', `${envars.pizzaServiceUrl}/checkout`, { order });
+  return {
+    data: {
+      data: {
+        order
+      }
+    }
+  };
+}

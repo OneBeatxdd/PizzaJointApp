@@ -25,6 +25,7 @@ const ActionType = KeyMirror({
   // **************************************************************************************************************
   SHOW_OVERLAY_LOADING: null,
   HIDE_OVERLAY_LOADING: null,
+  GLOBAL_REDIRECT: null,
   // **************************************************************************************************************
   // PIZZA
   // **************************************************************************************************************
@@ -39,6 +40,9 @@ const ActionType = KeyMirror({
   TOPPINGS_LIST_REQUEST_FAILURE: null,
   ADD_TO_BASKET: null,
   REMOVE_FROM_BASKET: null,
+  CHECKOUT_REQUEST: null,
+  CHECKOUT_REQUEST_SUCCESS: null,
+  CHECKOUT_REQUEST_FAILURE: null,
 });
 
 export default ActionType;

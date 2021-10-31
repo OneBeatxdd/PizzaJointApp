@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Typography, Dialog, AppBar, Toolbar, IconButton, Button, FormControlLabel, CheckBox } from '@material-ui/core';
+import { Grid, Typography, Dialog, AppBar, Toolbar, IconButton, Button, FormControlLabel, CheckBox, Slide } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import PageLoadingView from '../../components/PageLoadingView/PageLoadingView';
@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
   },
   toppingPriceTag: {
     color: theme.palette.grey[400],
+  },
+  contentContainer: {
+    marginTop: '64px',
+    padding: '16px',
   },
 }));
 
@@ -71,18 +75,20 @@ const PizzaSelectionDialog = ({ onSubmit, makeSnackbar, onMount, pizza, loading,
           </Button>
         </Toolbar>
       </AppBar>
-      <Grid container>
-        <Grid item>
+      <Grid container className={classes.contentContainer} spacing={3}>
+        <Grid item xs={12}>
           <Typography>{pizza.name}</Typography>
         </Grid>
         {/* image */}
-        <Grid item>
+        <Grid item xs={12}>
           <img src={pizza.imageUrl} />
         </Grid>
         {/* description */}
-        <Grid item>{pizza.description}</Grid>
+        <Grid item xs={12}>
+          {pizza.description}
+        </Grid>
         {/* toppings */}
-        <Grid container item>
+        <Grid container item xs={12}>
           {toppings
             ? toppings.map((topping) => (
                 <FormControlLabel
@@ -109,8 +115,8 @@ const PizzaSelectionDialog = ({ onSubmit, makeSnackbar, onMount, pizza, loading,
             : null}
         </Grid>
         {/* price */}
-        <Grid item>
-          <Button onClick={handleSubmit}>Add to Basket (${calTotalCost()})</Button>
+        <Grid item xs={12}>
+          <Button color="primary" onClick={handleSubmit} disableElevation>Add to Basket (${calTotalCost()})</Button>
         </Grid>
       </Grid>
     </Dialog>

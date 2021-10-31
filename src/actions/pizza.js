@@ -14,3 +14,7 @@ export const toppingListRequestFailure = (error) => ({ type: ActionType.TOPPINGS
 
 export const addToBasket = (order) => ({ type: ActionType.ADD_TO_BASKET, payload: { order } });
 export const removeFromBasket = (index) => ({ type: ActionType.REMOVE_FROM_BASKET, payload: { index } });
+
+export const checkoutRequest = (basket, historyPush) => ({ type: ActionType.CHECKOUT_REQUEST, payload: { basket, historyPush } });
+export const checkoutRequestSuccess = (data) => ({ type: ActionType.CHECKOUT_REQUEST_SUCCESS, payload: data });
+export const checkoutRequestFailure = (error) => ({ type: ActionType.CHECKOUT_REQUEST_FAILURE, payload: error });

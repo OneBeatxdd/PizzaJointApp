@@ -56,11 +56,11 @@ class SnackbarManager extends Component {
             ? anchorOrigin
             : {
                 vertical: 'bottom',
-                horizontal: 'left',
+                horizontal: 'right',
               }
         }
         open={this.state.open}
-        autoHideDuration={3000}
+        autoHideDuration={1000}
       >
         <Alert severity={severity ? severity : 'info'} onClose={this.handleClose}>
           <span id="snackbar-message">{message}</span>

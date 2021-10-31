@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Typography, IconButton, Button, List, ListItem, ListItemText, ListItemAvatar, Avatar } from '@material-ui/core';
+import { Grid, Typography, Button, List, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { addToBasket, pizzaListRequest, toppingListRequest } from '../../actions/pizza';
-import {
-  basketSelector,
-  pizzaDetailsSelector,
-  pizzaLoadingSelector,
-  toppingsLoadingSelector,
-  toppingsSelector,
-} from '../../selectors/pizzaSelectors';
+import { checkoutRequest, toppingListRequest } from '../../actions/pizza';
+import { basketSelector, pizzaDetailsSelector, toppingsLoadingSelector, toppingsSelector } from '../../selectors/pizzaSelectors';
 import OrderListItem from '../../containers/OrderListItem/OrderListItem';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,24 +17,28 @@ const useStyles = makeStyles((theme) => ({
   list: {
     width: '100%',
   },
+  checkoutButton: {
+    width: '100%',
+  },
+  divider: {
+    width: '100%',
+  },
 }));
 
 const CheckoutPage = ({ onSubmit, makeSnackbar, basket }) => {
   const classes = useStyles();
 
   const handleSubmit = () => {
-    const toppingIds = [];
-    Object.keys(selectedToppings).map((id) => {
-      if (selectedToppings[id]) toppingIds.push(id);
-    });
-    const order = {
-      pizzaId: pizza.id,
-      toppings: toppingIds,
-      price: calTotalCost(),
-    };
-    onSubmit(order);
-    makeSnackbar('Added To Basket!', {}, 'success');
-    onClose();
+    onSubmit(basket);
+    makeSnackbar('Paid!', {}, 'success');
+  };
+
+  const calTotalAmount = () => {
+    if (basket.length === 0) return 0;
+    const result = basket.reduce((acc, curr) => ({
+      price: acc.price + curr.price,
+    }));
+    return result.price;
   };
 
   return (
@@ -53,12 +51,24 @@ const CheckoutPage = ({ onSubmit, makeSnackbar, basket }) => {
           <List className={classes.list}>
             {basket ? basket.map((orderItem, index) => <OrderListItem key={`order-item-${index}`} order={orderItem} index={index} />) : null}
           </List>
+          <Divider className={classes.divider} />
+          <Grid item container justifyContent="flex-end">
+            {/* Total */}
+            <Typography>Total: ${calTotalAmount()}</Typography>
+          </Grid>
         </Grid>
       </Grid>
 
       <Grid item>
-        <Button variant="contained" color="primary" disableElevation>
-          Checkout
+        <Button
+          variant="contained"
+          color="primary"
+          disableElevation
+          disabled={basket.length === 0}
+          className={classes.checkoutButton}
+          onClick={handleSubmit}
+        >
+          Checkout (${calTotalAmount()})
         </Button>
       </Grid>
     </Grid>
@@ -79,7 +89,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(toppingListRequest());
     },
     onSubmit: (order) => {
-      dispatch(addToBasket(order));
+      dispatch(checkoutRequest(order, ownProps.history.push));
     },
     makeSnackbar: (message, anchorOrigin = {}, severity = null) => {
       dispatch({

@@ -12,6 +12,7 @@ let initState = {
   mobileNavBarOpen: false,
   overlayLoading: false,
   showNavDrawer: false,
+  url: null,
 };
 
 const system = (originalState = initState, action) => {
@@ -85,6 +86,11 @@ const system = (originalState = initState, action) => {
       return {
         ...originalState,
         showNavDrawer: false,
+      };
+    case ActionType.GLOBAL_REDIRECT:
+      return {
+        ...originalState,
+        url: action.payload,
       };
     default:
       return { ...originalState };

@@ -96,6 +96,14 @@ const pizza = (originalState = initState, action) => {
         },
       };
     }
+    case ActionType.CHECKOUT_REQUEST_SUCCESS: {
+      const localCopyLastOrder = [...originalState.lastOrder];
+      localCopyLastOrder.push(...action.payload.order);
+      return {
+        ...originalState,
+        lastOrder: localCopyLastOrder,
+      };
+    }
     default:
       return { ...originalState };
   }
